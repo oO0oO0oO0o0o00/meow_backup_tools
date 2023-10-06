@@ -54,6 +54,7 @@ def check_online(path: Path, local_root: Path, s3, bucket: str, mappings: Mappin
     except Exception as e:
         if type(e).__name__ == "NoSuchKey":
             return Results.RemoteFileMissing
+        raise e
     remote_hash = None
     for tag in response["TagSet"]:
         if tag["Key"] == "MD5":
