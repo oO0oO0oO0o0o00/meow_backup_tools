@@ -7,7 +7,7 @@ from archives import hash_archives
 
 if __name__ == '__main__':
     s3 = boto3.client("s3")
-    root = Path(r"G:\LOAR")
+    root = Path(r"E:\LOAR")
     hash_archives.process_tree(
         root,
         lambda path: hash_archives.check_online(
