@@ -6,26 +6,20 @@ from os.path import join as pjoin
 from pathlib import Path
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(
-        description='Synchronize a directory between an Android device and the '
-                    'local file system')
-    parser.add_argument(
-        'home',
-        metavar='/some/home/path',
-        type=str,
-        help='Where the MicroMsgX folders reside')
-    args = parser.parse_args()
+    dst_folder = Path(r"C:\Users\barco\Documents\HiSuite\backup\HUAWEI P40 Pro_2024-12-15 12.57.51\com.tencent.mobileqq_appDataTar\out\com.tencent.mobileqq")
+    # parser = argparse.ArgumentParser(
+    #     description='Synchronize a directory between an Android device and the '
+    #                 'local file system')
+    # parser.add_argument(
+    #     'home',
+    #     metavar='/some/home/path',
+    #     type=str,
+    #     help='Where the MicroMsgX folders reside')
+    # args = parser.parse_args()
 
-    for src_folder in glob.glob(pjoin(args.home, "*MicroMsg*/")):
-        # /home/MicroMsg0
-        src_folder_path = Path(src_folder)
-        # MicroMsg0
-        dst_folder = src_folder_path.name
-        while dst_folder[-1] in "0123456789":
-            # MicroMsg
-            dst_folder = dst_folder[:-1]
-        # /home/MicroMsg
-        dst_folder = pjoin(src_folder_path.parent, dst_folder)
+    # for src_folder in glob.glob(pjoin(args.home, "*MicroMsg*/")):
+    for src_folder in dst_folder.parent.glob(f"{dst_folder.name}*"):
+        src_folder_path = src_folder
         os.makedirs(dst_folder, exist_ok=True)
         # /home/MicroMsg0 ['a', 'b'], ['c.txt']
         # /home/MicroMsg0/a ['a1'], ['aaa.jpg']

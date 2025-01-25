@@ -2,14 +2,19 @@
 from adb.meow_bak import do
 
 if __name__ == '__main__':
-    do("240414", [
-        "/sdcard/DCIM",
-        "/sdcard/Download",
-        "/sdcard/Movies",
-        "/sdcard/Pictures",
-        "/sdcard/Recordings",
-        "/sdcard/Sounds",
-        "/sdcard/Tencent/QQ_Images",
-        # "/sdcard/Android/data/com.tencent.mm/MicroMsg/Download",
-        # "/sdcard/Android/data/com.tencent.mobileqq/Tencent/QQfile_recv",
-    ], r"C:\Users\barco\Documents\HiSuite\backup\HUAWEI P40 Pro+_2024-04-13 18.38.35\storage", excludes=[".*"])
+    do("250111", 60, [
+        "1",
+        "DCIM",
+        "Download",
+        "EditedOnlinePhotos",
+        "Movies",
+        "Pictures",
+        # "Recordings",
+        "Sounds",
+        # "Tencent/QQ_Images",
+        # "Android/data/com.tencent.mm/MicroMsg/Download",
+        # "Android/data/com.tencent.mobileqq/Tencent/QQfile_recv",
+    ], r"C:\Users\barco\bak_tmp", excludes=[".*"])
+    # do("250111", 10, [
+    #     "/sdcard/alipay",
+    # ], r"C:\Users\barco\Documents\HiSuite\backup\250111\test", excludes=[".*"])

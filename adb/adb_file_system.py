@@ -1,4 +1,5 @@
 import os
+import random
 import re
 import stat
 import subprocess
@@ -256,5 +257,13 @@ class AdbFileSystem(GlobLike, OSLike):
 
     def Pull(self, src: bytes, dst: bytes) -> None:
         """Pull a file from the Android device to the local file system."""
+        dst_original = None
+        # ADB is using some C API with outdated limits on the length of filenames and paths.
+        # Nothing could be done if the parent directory is already too long.
+        if len(dst) > 200:
+            dst_original = dst.decode(errors='replace')
+            dst = dst[:dst.rfind(b'/') + 1] + str(random.randint(0, 1000000000)).encode('ascii')
         if subprocess.call(self.adb + [b'pull', src, dst]) != 0:
             raise OSError('pull failed')
+        if dst_original is not None:
+            os.rename(dst, dst_original)

@@ -181,7 +181,10 @@ class FileSyncer(object):
                             if stat.S_ISREG(s.st_mode):
                                 self.num_bytes += s.st_size
                     if not self.config.dry_run:
-                        self.dst_fs[i].utime(dst_name, (s.st_atime, s.st_mtime))
+                        dst_fs = self.dst_fs[i]
+                        # TODO: Wrap os with fixing layer instead this crap.
+                        fixed_name = dst_name.decode(errors='replace') if dst_fs is os else dst_name
+                        dst_fs.utime(fixed_name, (s.st_atime, s.st_mtime))
 
     def TimeReport(self) -> None:
         """Report time and amount of data transferred."""
@@ -233,7 +236,7 @@ def BuildFileList(
             except:
                 pass
         for n in files:
-            if n == b'.' or n == b'..' or ((path + b'/' + n) in exlist) or (n.decode() in excludes):
+            if n == b'.' or n == b'..' or ((path + b'/' + n) in exlist) or (n.decode(errors="replace") in excludes):
                 continue
             else:
                 for t in BuildFileList(fs, path + b'/' + n, follow_links,
@@ -251,7 +254,9 @@ def BuildFileList(
 
 
 def within_time_range(statresult, time_range):
-    return time_range is None or time_range[0] <= statresult.st_mtime <= time_range[1]
+    return time_range is None or\
+        (time_range[0] is None or time_range[0] <= statresult.st_mtime) and\
+        (time_range[1] is None or statresult.st_mtime <= time_range[1])
 
 
 def DiffLists(a: Iterable[Tuple[bytes, os.stat_result]],
@@ -362,8 +367,12 @@ class DeleteInterruptedFile(object):
                  exc_val: Optional[Exception],
                  exc_tb: Optional[TracebackType]) -> bool:
         if exc_type is not None:
-            logger.info('Interrupted-{}-Delete: {}',
-                         'Pull' if self.fs == os else 'Push', self.name)
+            logger.warning(
+                'Interrupted-{}-Delete: {}: {}',
+                'Pull' if self.fs == os else 'Push', self.name, exc_val)
             if not self.dry_run:
-                self.fs.unlink(self.name)
+                try:
+                    self.fs.unlink(self.name)
+                except Exception as e:
+                    logger.warning('Failed to delete interrupted file: {}.', e)
         return False

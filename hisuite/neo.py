@@ -4,18 +4,9 @@ from pathlib import Path
 from Crypto.Cipher import AES
 from loguru import logger
 
-# k_src = r"C:\Users\barco\Documents\HiSuite\backup\HUAWEI P40 Pro+_2023-04-14 07.34.00\com.tencent.mobileqq.tar"
-# k_key = "95C0C992FC430DE11FF46C0D3A3860FF90CF4D0C87E4073AF774CE230DB3DA8A"
-# k_iv = "A189BDC346A0CBE7ED5B9D3E3408699B"
-
-# k_src = r"C:\Users\barco\Documents\HiSuite\backup\HUAWEI P40 Pro+_2023-04-14 08.31.17\com.tencent.mm.tar"
-# k_key = "647726B1A097773C458912EDC6D943DBB11048FE51EF668CE100E36ADACF3C45"
-# k_iv = "7F75F29A3A6F1D2C1CB205B77FA4618A"
-
-k_src = r"C:\Users\barco\Documents\HiSuite\backup\HUAWEI P40 Pro+_2023-10-05 12.44.29\com.tencent.mm_appDataTar\main\com.tencent.mm.tar.1"
-k_key = "2E686DC6509A6A64DEDFE35A334EC24CF734C7F751C0DFAEF5A84617A160A51A"
-k_iv = "F135B59A69D0AE876668E2A39903F57C"
-k_src = r"C:\Users\barco\Documents\HiSuite\backup\HUAWEI P40 Pro+_2023-10-05 12.44.29\com.tencent.mm_appDataTar"
+k_src = r"C:\Users\barco\Documents\HiSuite\backup\HUAWEI P40 Pro_2024-12-15 12.57.51\com.tencent.mobileqq#TwinApp.tar"
+k_key = "D4412A311A2F7466B49A338572F8F37AAA0051771F7E14E950F08D129FBBE40D"
+k_iv = "44DB4E4C90EA82879045FCDDCE258207"
 
 
 def main():
